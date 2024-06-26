@@ -1,0 +1,6 @@
+# Ignorar todo
+*
+
+# Excepto los archivos .gitignore y .c
+!.gitignore
+!*.c
