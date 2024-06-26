@@ -61,17 +61,19 @@ int main (){
         }
     };
 
-    poll(fds,2,50000);
-
-    char buffer[256] = { 0 };
+    
     for( ; ; ){
+        poll(fds,2,50000);
+        char buffer[256] = { 0 };
         if(fds[0].revents & POLLIN){
-            if(read(0, buffer, 255) == -1){
+           int message = read(0, buffer, 255);
+           if(message == -1 ){
                 printf("Error al leer\n");
                 close(sockfd);
                 return 1;
-            }
-            if(send(clientfd, buffer, 255, 0) == -1){
+           }
+           int sendMessage = send(clientfd, buffer, 255, 0);
+           if(sendMessage == -1){
                 printf("Error al envíar\n");
                 close(sockfd);
                 return 1;
@@ -82,7 +84,6 @@ int main (){
                 close(sockfd);
                 return 1;
             }
-
             printf("%s\n",buffer);
         }
     }
