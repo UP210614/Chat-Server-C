@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <sys/types.h>         
 #include <sys/socket.h>
 #include <unistd.h>
 #include <arpa/inet.h>
@@ -20,7 +19,7 @@ int main (){
         0
     };
 
-    accept(sockfd, &address, sizeof(address));
+    connect(sockfd, &address, sizeof(address));
     
 
 
