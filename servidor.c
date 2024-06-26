@@ -4,7 +4,7 @@
 #include <arpa/inet.h>
 #include <poll.h>
 
-//Servidor
+//Servidor 2
 int main (){
 
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
