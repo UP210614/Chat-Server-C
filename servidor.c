@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <poll.h>
+
+//Servidor
 int main (){
 
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
