@@ -6,7 +6,7 @@
 
 //Servidor 2
 int main (){
-
+    //Creación del socket
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if(sockfd == -1){
         printf("Error al crear el socket\n");
