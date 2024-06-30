@@ -4,7 +4,13 @@
 #include <arpa/inet.h>
 #include <poll.h>
 
-//Servidor 2
+//Servidor
+
+
+
+
+int bufferSize(char b[]);
+
 int main (){
     //Creación del socket
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -72,7 +78,7 @@ int main (){
                 close(sockfd);
                 return 1;
            }
-           int sendMessage = send(clientfd, buffer, 255, 0);
+           int sendMessage = send(clientfd, buffer, bufferSize(buffer)-1, 0);
            if(sendMessage == -1){
                 printf("Error al envíar\n");
                 close(sockfd);
@@ -91,3 +97,17 @@ int main (){
     close(sockfd);
     return 0;
 }
+
+
+int bufferSize(char buffer[]){
+
+	int c = 0;
+
+	for(c ; buffer[c] != '\0'; c++){
+	}
+
+	return c;
+
+}
+
+
