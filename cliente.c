@@ -32,7 +32,11 @@ int main (int argc, char *argv[]){
     if(s != 0){
 	printf("Error en la funcion getaddrinfo.\n");
 	return 0;
-    } 
+    }
+		
+   printf("ai_flags: %d\nai_family: %d\nai_socktype: %d\nai_protocol: %d\n", result->ai_flags,result->ai_family,result->ai_socktype,result->ai_protocol); 
+   printf("ai_socklen: %u\n", result->ai_addrlen);
+   printf("ai_canonname: %s\n",result->ai_canonname);
 
 
     for (rp = result; rp != NULL; rp = rp->ai_next) {

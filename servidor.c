@@ -48,6 +48,7 @@ int main (){
     if(clientfd == -1){
         printf("Error al aceptar el cliente\n");
         close(sockfd);
+	close(clientfd);
         return 0;
     }
 
@@ -76,24 +77,28 @@ int main (){
            if(message == -1 ){
                 printf("Error al leer\n");
                 close(sockfd);
+		close(clientfd);
                 return 1;
            }
            int sendMessage = send(clientfd, buffer, bufferSize(buffer)-1, 0);
            if(sendMessage == -1){
                 printf("Error al envíar\n");
                 close(sockfd);
+		close(clientfd);
                 return 1;
             }
         }else if(fds[1].revents & POLLIN){
             if(recv(clientfd, buffer, 255, 0) == 0){
                 printf("Error al recibir desde el cliente\n");
                 close(sockfd);
+	        close(clientfd);
                 return 1;
             }
             printf("%s\n",buffer);
         }
     }
-    
+
+    close(clientfd);
     close(sockfd);
     return 0;
 }
