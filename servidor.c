@@ -21,20 +21,27 @@ int main (){
     }
     printf("El socket se creó correctamente\n");
 
+    // Configurar SO_REUSEADDR para reutilizar el puerto
+    int opt = 1;
+    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) == -1) {
+        printf("Error al configurar las opciones del socket\n");
+        close(sockfd);
+        return 0;
+    }
+
     struct sockaddr_in address = {
         AF_INET,
         htons(9999),
         0
     };
 
-    if(bind(sockfd, &address, sizeof(address)) == -1){
+    if(bind(sockfd, (struct sockaddr *)&address, sizeof(address)) == -1){
         printf("Error al enlazar el socket\n");
         close(sockfd);
         return 0;
     }
 
-    printf("El socket se enlazo correctamente\n");
-
+    printf("El socket se enlazó correctamente\n");
 
     if(listen(sockfd,10) == -1){
         printf("Error al poner en escucha el socket\n");
@@ -42,8 +49,8 @@ int main (){
         return 0;
     }
 
-    printf("El socket esta en escucha\n");
-    
+    printf("El socket está en escucha\n");
+
     int clientfd = accept(sockfd, 0, 0);
     if(clientfd == -1){
         printf("Error al aceptar el cliente\n");
@@ -51,8 +58,7 @@ int main (){
         return 0;
     }
 
-    printf("Conexion con cliente aceptada\n");
-
+    printf("Conexión con cliente aceptada\n");
 
     struct pollfd fds[2] = {
         {
@@ -67,7 +73,6 @@ int main (){
         }
     };
 
-    
     for( ; ; ){
         poll(fds,2,50000);
         char buffer[256] = { 0 };
@@ -80,7 +85,7 @@ int main (){
            }
            int sendMessage = send(clientfd, buffer, bufferSize(buffer)-1, 0);
            if(sendMessage == -1){
-                printf("Error al envíar\n");
+                printf("Error al enviar\n");
                 close(sockfd);
                 return 1;
             }
@@ -93,10 +98,11 @@ int main (){
             printf("%s\n",buffer);
         }
     }
-    
+
     close(sockfd);
     return 0;
 }
+
 
 
 int bufferSize(char buffer[]){
